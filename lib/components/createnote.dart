@@ -1,9 +1,7 @@
-import 'package:assignment/components/home.dart';
 import 'package:assignment/datamodel.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../notifier.dart';
 import 'createnote_bloc.dart';
 
 // ignore: must_be_immutable
@@ -44,7 +42,7 @@ class CreateNotePage extends StatelessWidget {
                                 color: Colors.amber.withOpacity(0.8)),
                           )
                         : Text(
-                            'Make Note',
+                            'Create Note',
                             style: TextStyle(
                                 fontSize: 17,
                                 color: Colors.amber.withOpacity(0.8)),
@@ -59,7 +57,7 @@ class CreateNotePage extends StatelessWidget {
                         controller: text,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Enter some string";
+                            return "Enter Valid title";
                           } else {
                             return null;
                           }
@@ -82,7 +80,7 @@ class CreateNotePage extends StatelessWidget {
                       TextFormField(
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Enter some string";
+                            return "Enter valid description";
                           } else {
                             return null;
                           }
@@ -119,20 +117,13 @@ class CreateNotePage extends StatelessWidget {
                           BlocProvider.of<CreateNoteBloc>(context)
                               .add(OnUpdate(data));
                           Navigator.pop(context);
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HomePage(),
-                              ));
+
+                          ScreenUpdate().changeValue(true);
                         } else {
                           BlocProvider.of<CreateNoteBloc>(context)
                               .add(OnAdd(data));
                           Navigator.pop(context);
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HomePage(),
-                              ));
+                          ScreenUpdate().changeValue(true);
                         }
                       }
                     },
